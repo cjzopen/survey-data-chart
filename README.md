@@ -4,6 +4,8 @@
 * chart.js@4.5.1
 * chartjs-plugin-datalabels@2
 
+## USED
+
 ### draw single chice 繪製單選題 (堆疊長條圖)
 SurveyCharts.drawSingleSelectChart = function({
   canvasId,
