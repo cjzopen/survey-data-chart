@@ -24,7 +24,7 @@ SurveyCharts.drawSingleSelectChart = function({
  * {string} config.userAns - 使用者選擇的答案名稱
  * {string[]} config.allAns - 所有可能的答案選項
  * {string[]} config.colors - 答案選項對應的顏色
- * {string[]} config.labels - 堆疊軸的標籤 (例如: ['全產業', '你的產業'])
+ * {string[]} config.labels - 堆疊軸的標籤 (例如: ['全產業', '使用者的產業'])
  * {number[][]} config.ratios - 二維陣列 [[全產業數據], [使用者的產業數據]]
  * {string} [config.userColor='#3fa9f5'] - 凸顯使用者答案的邊框顏色
  * {boolean} [config.showLegend=true] - 是否顯示圖例
@@ -52,4 +52,4 @@ SurveyCharts.drawMultiSelectChart = function({
  * {string[]} [config.datasetLabels=['全產業', '你的產業']] - 圖例名稱
  * {boolean} [config.showPercent=true] - 是否顯示數據標籤
  * {string} [config.dataSuffix='%'] - 數據標籤的後綴
- * {string} [config.highlightColor='#58A8E280'] - 答案高亮的背景色
+ * {string} [config.highlightColor='#58A8E280'] - 選擇答案的背景色
