@@ -113,7 +113,7 @@ SurveyCharts.drawSingleSelectChart = function({
               return [
                 ...original,
                 {
-                  text: '你的答案 (邊框)',
+                  text: '所在位置',
                   fillStyle: 'white',
                   strokeStyle: userColor,
                   lineWidth: 4,
@@ -168,20 +168,21 @@ SurveyCharts.drawSingleSelectChart = function({
 };
 
 
-// 複選題專用的背景高亮 Plugin
+// 複選題專用的背景 Plugin
 const backgroundHighlightPlugin = {
   id: 'backgroundHighlight',
   // 在繪製圖表元素 (Dataset) 之前繪製，確保背景在長條圖之下
-  beforeDraw(chart, args, options) {
+  beforeDraw(chart) {
     const { ctx, chartArea: { top, bottom, width, height }, scales: { x } } = chart;
     ctx.save();
     
     // 從 options 讀取配置
-    // FIX: 如果 backgroundHighlight 配置不存在，預設為空物件 {}，防止 TypeError
+    // 如果 backgroundHighlight 不存在，預設為空物件 {}，防止 TypeError
     const config = chart.options.backgroundHighlight || {}; 
     const highlightFillColor = config.highlightFillColor || '#58A8E280'; 
     const labels = chart.data.labels;
     const userAns = config.userAns || []; // 確保 userAns 預設為空陣列
+    const padding = 4; // 避免貼邊的額外間距
     
     ctx.fillStyle = highlightFillColor;
 
@@ -201,11 +202,11 @@ const backgroundHighlightPlugin = {
         }
 
         const drawX = xCenter - (barWidth / 2);
-        const drawY = top;
+        const drawY = top ;
         const drawHeight = bottom - top;
         
-        const boundedX = Math.max(drawX, x.left);
-        const boundedWidth = Math.min(barWidth, x.right - boundedX);
+        const boundedX = Math.max(drawX, x.left) + padding;
+        const boundedWidth = Math.min(barWidth, x.right - boundedX) - padding;
         
         ctx.fillRect(boundedX, drawY, boundedWidth, drawHeight);
       }
@@ -229,7 +230,7 @@ Chart.register(backgroundHighlightPlugin);
  * @param {string[]} [config.datasetLabels=['全產業', '你的產業']] - 圖例名稱
  * @param {boolean} [config.showPercent=true] - 是否顯示數據標籤
  * @param {string} [config.dataSuffix='%'] - 數據標籤的後綴
- * @param {string} [config.highlightColor='#58A8E280'] - 答案高亮的背景色
+ * @param {string} [config.highlightColor='#58A8E280'] - 答案的背景色
  */
 SurveyCharts.drawMultiSelectChart = function({
   canvasId,
@@ -282,7 +283,7 @@ SurveyCharts.drawMultiSelectChart = function({
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      // 傳遞高亮顏色和使用者答案給 Plugin
+      // 傳遞顏色和使用者答案給 Plugin
       backgroundHighlight: {
         highlightFillColor: highlightColor,
         userAns: userAns
@@ -297,7 +298,7 @@ SurveyCharts.drawMultiSelectChart = function({
               return [
                 ...original,
                 {
-                  text: '你的答案 (背景高亮)',
+                  text: '所在位置',
                   fillStyle: highlightColor, 
                   strokeStyle: highlightColor, 
                   lineWidth: 1,
